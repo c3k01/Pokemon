@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#f6c948">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="皮卡排球">
+  <meta name="description" content="在手機上重溫皮卡丘排球，挑戰三種電腦難度。">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon-180.png">
+  <link rel="stylesheet" href="./style.css">
+  <title>皮卡丘排球 | PIKA VOLLEY</title>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-icon">⚡</span><div><b>PIKA <em>VOLLEY</em></b><small>皮卡丘排球 · 手機懷舊版</small></div></div>
+      <button class="icon-button" id="soundButton" type="button" aria-label="切換音效" title="切換音效">♫</button>
+    </header>
+
+    <div class="game-wrap">
+      <div class="scoreboard" aria-live="polite"><div class="team"><span class="team-dot player-dot"></span><span>你</span><strong id="playerScore">0</strong></div><div class="score-divider">:</div><div class="team"><strong id="cpuScore">0</strong><span>電腦</span><span class="team-dot cpu-dot"></span></div></div>
+      <div class="court-frame">
+        <canvas id="game" width="800" height="480" aria-label="皮卡丘排球遊戲畫面"></canvas>
+        <div id="overlay" class="overlay">
+          <div class="panel" id="menuPanel">
+            <div class="panel-kicker">WELCOME TO THE COURT</div>
+            <div class="pika-badge" aria-hidden="true">⚡</div>
+            <h1>皮卡丘排球</h1>
+            <p class="panel-subtitle">跳起來，把球打過去！</p>
+            <div class="difficulty" role="group" aria-label="電腦難度">
+              <button class="difficulty-btn" data-level="easy" type="button">新手<small>輕鬆上手</small></button>
+              <button class="difficulty-btn selected" data-level="normal" type="button">普通<small>剛好刺激</small></button>
+              <button class="difficulty-btn" data-level="hard" type="button">高手<small>認真對決</small></button>
+            </div>
+            <button class="primary-btn" id="startButton" type="button">開始遊戲 <span>→</span></button>
+            <button class="text-btn" id="onlineButton" type="button">線上對戰 <span class="soon">籌備中</span></button>
+          </div>
+          <div class="panel hidden" id="pausePanel"><div class="panel-kicker">TAKE A BREATH</div><h2>遊戲暫停</h2><p class="panel-subtitle">準備好了就繼續！</p><button class="primary-btn" id="resumeButton" type="button">繼續遊戲 →</button><button class="text-btn" id="restartFromPause" type="button">重新開始</button></div>
+          <div class="panel hidden" id="endPanel"><div class="panel-kicker">MATCH COMPLETE</div><div class="trophy" id="endIcon">🏆</div><h2 id="endTitle">你贏了！</h2><p class="panel-subtitle" id="endText"></p><button class="primary-btn" id="playAgainButton" type="button">再玩一場 →</button><button class="text-btn" id="backToMenuButton" type="button">返回選單</button></div>
+          <div class="panel hidden" id="onlinePanel"><div class="panel-kicker">COMING SOON</div><div class="trophy">🌐</div><h2>線上對戰</h2><p class="panel-subtitle">配對與好友房間正在規劃中。現在可以先挑戰三種難度的電腦！</p><button class="primary-btn" id="onlineBackButton" type="button">返回選單 →</button></div>
+          <div class="countdown hidden" id="countdown">3</div>
+          <div class="point-toast hidden" id="pointToast">得分！</div>
+        </div>
+      </div>
+      <div class="game-meta"><span id="statusText">先選擇難度，再開始遊戲</span><button id="pauseButton" class="pause-button hidden" type="button" aria-label="暫停遊戲">Ⅱ 暫停</button></div>
+    </div>
+
+    <section class="controls" aria-label="觸控遊戲操作">
+      <div class="move-controls"><button id="leftButton" class="control-button move" type="button" aria-label="向左移動">◀</button><button id="rightButton" class="control-button move" type="button" aria-label="向右移動">▶</button></div>
+      <div class="action-controls"><button id="jumpButton" class="control-button jump" type="button">跳躍 <span>↑</span></button><button id="hitButton" class="control-button hit" type="button">扣球 <span>⚡</span></button></div>
+    </section>
+    <footer class="footer"><span>觸控按鍵遊玩 · 先得 7 分獲勝</span><span class="desktop-tip">鍵盤：← → 移動 · ↑ / 空白鍵跳躍 · X 扣球 · P 暫停</span></footer>
+  </main>
+  <script src="./app.js" defer></script>
+</body>
+</html>
