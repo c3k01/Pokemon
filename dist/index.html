@@ -1,41 +1,4 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-  <meta name="theme-color" content="#5478d5">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="皮卡丘打排球">
-  <meta name="description" content="重溫經典皮卡丘打排球的像素畫面與對戰玩法。">
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css">
-  <title>皮卡丘打排球</title>
-</head>
-<body>
-  <main class="game-shell">
-    <div class="titlebar"><span>對戰ぴかちゅ～　ビーチバレー編</span><button id="sound" type="button" aria-label="切換音效">♫ ON</button></div>
-    <section class="game-screen" aria-label="皮卡丘打排球遊戲">
-      <canvas id="game" width="432" height="304" aria-label="像素風格皮卡丘排球球場"></canvas>
-      <div id="overlay" class="overlay">
-        <div class="dialog" id="menu">
-          <h1>皮卡丘打排球</h1>
-          <p>對戰ぴかちゅ～<br>ビーチバレー編</p>
-          <button id="single" type="button">1P　對戰電腦</button>
-          <button id="versus" type="button">2P　雙人對戰</button>
-          <small>先得 15 分獲勝</small>
-        </div>
-        <div class="dialog hidden" id="pause"><h2>暫　停</h2><button id="resume" type="button">繼續遊戲</button><button id="restart" type="button">重新開始</button></div>
-        <div class="dialog hidden" id="end"><h2 id="winner">比賽結束</h2><button id="again" type="button">再玩一次</button><button id="back" type="button">返回選單</button></div>
-      </div>
-    </section>
-    <div class="control-row">
-      <div class="move-group"><button class="pad" data-key="left" aria-label="向左">◀</button><button class="pad" data-key="right" aria-label="向右">▶</button></div>
-      <div class="action-group"><button class="pad" data-key="jump" aria-label="跳躍">↑<small>跳躍</small></button><button class="pad" data-key="dive" aria-label="撲救">↓<small>撲救</small></button><button class="pad hit" data-key="hit" aria-label="扣球">●<small>扣球</small></button></div>
-    </div>
-    <p class="instructions">1P：← → 移動　↑ 跳躍　↓ 撲救　Enter 扣球 <span>｜ 2P：A D 移動　W 跳躍　S 撲救　空白鍵扣球</span></p>
-    <div class="foot-actions"><button id="pauseButton" type="button">暫停 / 繼續</button><button id="homeButton" type="button">返回選單</button></div>
-  </main>
-  <script src="./app.js" defer></script>
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="zh-Hant"><meta charset="utf-8" /><title>皮卡丘打排球</title>
+<meta http-equiv="refresh" content="0; URL=./zh/" />
+<a href="./zh/">開始遊戲</a></html>
