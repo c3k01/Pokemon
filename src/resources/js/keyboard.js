@@ -3,6 +3,7 @@
  */
 'use strict';
 import { PikaUserInput } from './physics.js';
+import { readTouchKey } from './touch_input.js';
 
 /**
  * Class representing a keyboard used to control a player
@@ -46,10 +47,15 @@ export class PikaKeyboard extends PikaUserInput {
    * This method is for freezing the keyboard input during the process of one game frame.
    */
   getInput() {
-    if (this.leftKey.isDown) {
+    const left = readTouchKey(this.leftKey.value);
+    const right = readTouchKey(this.rightKey.value);
+    const up = readTouchKey(this.upKey.value);
+    const down = readTouchKey(this.downKey.value);
+    const hit = readTouchKey(this.powerHitKey.value);
+    if (this.leftKey.isDown || left.isDown) {
       this.xDirection = -1;
     } else if (
-      this.rightKey.isDown ||
+      this.rightKey.isDown || right.isDown ||
       (this.downRightKey && this.downRightKey.isDown)
     ) {
       this.xDirection = 1;
@@ -57,10 +63,10 @@ export class PikaKeyboard extends PikaUserInput {
       this.xDirection = 0;
     }
 
-    if (this.upKey.isDown) {
+    if (this.upKey.isDown || up.isDown || up.pressed) {
       this.yDirection = -1;
     } else if (
-      this.downKey.isDown ||
+      this.downKey.isDown || down.isDown ||
       (this.downRightKey && this.downRightKey.isDown)
     ) {
       this.yDirection = 1;
@@ -69,7 +75,7 @@ export class PikaKeyboard extends PikaUserInput {
     }
 
     const isDown = this.powerHitKey.isDown;
-    if (!this.powerHitKeyIsDownPrevious && isDown) {
+    if ((!this.powerHitKeyIsDownPrevious && isDown) || hit.pressed) {
       this.powerHit = 1;
     } else {
       this.powerHit = 0;

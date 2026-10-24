@@ -545,64 +545,143 @@ input.toggle-switch:checked + label::before {
   content: '\263E';
 }
 
-/* Touch controls for the original game input. The 432×304 playfield keeps its original proportions. */
+/* Touch controls keep the original playfield and keyboard combinations. */
 :root {
-  --canvas-width: min(96vw, calc((100dvh - 160px) * 432 / 304), 864px);
+  --canvas-width: min(96vw, calc((100dvh - 88px) * 432 / 304), 864px);
   --canvas-height: calc(var(--canvas-width) * 304 / 432);
 }
 #flex-container {
-  width: var(--canvas-width);
   height: auto;
   min-height: 100dvh;
-  justify-content: center;
-  gap: 5px;
-}
-#menu-bar { flex: 0 0 auto; margin-bottom: 2px; }
-.touch-controls {
-  display: none;
-  justify-content: space-between;
   gap: 8px;
-  width: var(--canvas-width);
-  padding: 2px 0;
+}
+#menu-bar { flex: 0 0 auto; margin-bottom: 0; }
+.touch-controls, .touch-help { display: none; }
+.touch-controls {
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
-.touch-directions,.touch-actions { display: flex; gap: 6px; }
 .touch-controls button {
-  width: min(14vw, 74px);
-  height: 60px;
-  border: 3px solid #202020;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: 2px solid #303334;
+  color: #202326;
   background: #f2f1e9;
-  color: #111;
   font-size: 24px;
   font-weight: bold;
-  box-shadow: 0 3px #111;
+  line-height: 1.2;
+  box-shadow: 0 4px 0 #303334;
   touch-action: none;
   -webkit-tap-highlight-color: transparent;
 }
-.touch-actions button:last-child { background: #f8d94d; }
-.touch-controls button.pressed { transform: translateY(2px); box-shadow: 0 1px #111; }
-.touch-controls small { display: block; font-size: 10px; line-height: 1; }
-.touch-help { display: none; margin: 0; text-align: center; font-size: 11px; line-height: 1.3; }
-@media (pointer: coarse), (max-width: 700px) {
-  .touch-controls { display: flex; }
-  .touch-help { display: block; }
-  #flex-container { justify-content: flex-start; padding-top: max(12px, env(safe-area-inset-top)); }
+.touch-controls button.pressed {
+  background: #d0d8df;
+  box-shadow: 0 1px 0 #303334;
+  transform: translateY(3px);
 }
-@media (max-width: 380px) {
-  .touch-controls button { width: 14vw; height: 55px; font-size: 21px; }
-  .touch-directions,.touch-actions { gap: 4px; }
-  .touch-help { font-size: 10px; }
+.touch-controls button:focus-visible { outline: 3px solid #168bea; outline-offset: 3px; }
+.touch-controls small { display: block; font-size: 12px; line-height: 1.5; }
+.touch-directions {
+  display: grid;
+  grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+  width: var(--pad-size);
+  height: var(--pad-size);
+  padding: 3px;
+  gap: 3px;
+  border-radius: 24px;
+  background: rgba(128, 128, 128, 0.12);
 }
-@media (max-height: 500px) and (orientation: landscape) {
-  :root { --canvas-width: min(86vw, calc((100dvh - 82px) * 432 / 304), 864px); }
-  #flex-container { flex-direction: row; align-items: center; gap: 7px; }
-  #menu-bar { position: absolute; top: 2px; left: 0; width: 100%; height: 32px; }
-  #menu-bar .btn { height: 30px; font-size: 13px; }
-  .touch-controls { width: auto; flex-direction: column; }
-  .touch-directions,.touch-actions { gap: 4px; }
-  .touch-controls button { width: 42px; height: 42px; font-size: 16px; }
-  .touch-controls small,.touch-help { display: none; }
+.touch-directions button { min-width: 44px; min-height: 44px; border-radius: 10px; font-size: 21px; }
+.direction-up { grid-area: 1 / 2; }
+.direction-left { grid-area: 2 / 1; }
+.direction-right { grid-area: 2 / 3; }
+.direction-down { grid-area: 3 / 2; }
+.direction-centre { grid-area: 2 / 2; align-self: center; text-align: center; font-size: 11px; opacity: 0.65; pointer-events: none; }
+.touch-actions { position: relative; width: var(--pad-size); height: var(--pad-size); }
+.touch-actions button {
+  position: absolute;
+  width: 55%;
+  height: 55%;
+  border-radius: 50%;
+}
+.touch-jump { left: 0; bottom: 0; }
+.touch-actions .touch-hit { right: 0; top: 0; background: #f8d94d; }
+.touch-actions .touch-hit.pressed { background: #e4b725; }
+.touch-help { margin: 0; text-align: center; font-size: 12px; line-height: 1.6; }
+.touch-help span { display: block; }
+
+@media (any-pointer: coarse), (max-width: 700px) {
+  :root {
+    --pad-size: clamp(144px, 42vw, 180px);
+    --canvas-width: min(calc(100vw - 24px), calc((100dvh - var(--pad-size) - 152px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 432 / 304), 864px);
+    --canvas-height: calc(var(--canvas-width) * 304 / 432);
+  }
+  #flex-container {
+    display: grid;
+    grid-template-areas: 'menu' 'screen' 'controls' 'help';
+    grid-template-rows: 44px minmax(0, 1fr) var(--pad-size) auto;
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    gap: 12px;
+    padding: max(10px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+    overscroll-behavior: none;
+  }
+  #menu-bar {
+    grid-area: menu;
+    width: min(100%, 864px);
+    height: 44px;
+    justify-self: center;
+    z-index: 20;
+  }
+  #menu-bar .btn { height: 44px; width: 76px; font-size: 15px; border-radius: 10px; touch-action: manipulation; }
+  #menu-bar .color-scheme-toggle-switch-container { height: 44px; width: 64px; }
+  #menu-bar .dropdown .btn { width: 112px; margin: 2px 0 0; }
+  #menu-bar .submenu > .btn { width: 112px; }
+  #game-canvas-container { grid-area: screen; align-self: center; justify-self: center; width: var(--canvas-width); }
+  .touch-controls {
+    display: flex;
+    grid-area: controls;
+    justify-content: space-between;
+    width: min(100%, 864px);
+    justify-self: center;
+  }
+  .touch-help { display: block; grid-area: help; }
+  #about-box { max-height: calc(100dvh - 80px); overflow-y: auto; overscroll-behavior: contain; }
+  #about-box .for-margin { height: 24px; }
+}
+
+/* In landscape each thumb stays beside the playfield, never on top of it. */
+@media (orientation: landscape) and (any-pointer: coarse), (orientation: landscape) and (max-width: 700px) {
+  :root {
+    --pad-size: clamp(144px, 20vw, 180px);
+    --canvas-width: min(calc(100vw - var(--pad-size) * 2 - 48px - env(safe-area-inset-left) - env(safe-area-inset-right)), calc((100dvh - 92px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 432 / 304), 864px);
+    --canvas-height: calc(var(--canvas-width) * 304 / 432);
+  }
+  #flex-container {
+    grid-template-areas: 'menu menu menu' 'directions screen actions' 'help help help';
+    grid-template-columns: var(--pad-size) minmax(0, 1fr) var(--pad-size);
+    grid-template-rows: 44px minmax(0, 1fr) 20px;
+    gap: 8px 12px;
+    padding-top: max(4px, env(safe-area-inset-top));
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+  .touch-controls { display: contents; }
+  .touch-directions { grid-area: directions; align-self: center; }
+  .touch-actions { grid-area: actions; align-self: center; }
+  .touch-help { font-size: 11px; white-space: nowrap; }
+  .touch-help span { display: inline; margin: 0 8px; }
+}
+@media (max-width: 350px) and (orientation: portrait) {
+  :root { --pad-size: 144px; }
+  #flex-container { padding-left: 8px; padding-right: 8px; }
+  #menu-bar .btn { width: 64px; }
+  #menu-bar .color-scheme-toggle-switch-container { width: 56px; }
+  .touch-help { font-size: 11px; }
 }

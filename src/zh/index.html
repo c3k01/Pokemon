@@ -425,17 +425,19 @@
         </div>
       </div>
       <nav class="touch-controls" aria-label="觸控遊戲控制">
-        <div class="touch-directions">
-          <button type="button" data-game-key="KeyD" aria-label="向左">◀</button>
-          <button type="button" data-game-key="KeyG" aria-label="向右">▶</button>
+        <div class="touch-directions" aria-label="方向盤，可滑動換向與斜向移動">
+          <button type="button" class="direction-up" data-game-key="KeyR" aria-label="向上／跳躍">▲</button>
+          <button type="button" class="direction-left" data-game-key="KeyD" aria-label="向左">◀</button>
+          <span class="direction-centre" aria-hidden="true">移動</span>
+          <button type="button" class="direction-right" data-game-key="KeyG" aria-label="向右">▶</button>
+          <button type="button" class="direction-down" data-game-key="KeyV" aria-label="向下／控制球路">▼</button>
         </div>
         <div class="touch-actions">
-          <button type="button" data-game-key="KeyR" aria-label="向上／跳躍">▲<small>跳躍</small></button>
-          <button type="button" data-game-key="KeyV" aria-label="向下／控制球路">▼<small>向下</small></button>
-          <button type="button" data-game-key="KeyZ" aria-label="擊球／確認">●<small>擊球</small></button>
+          <button type="button" class="touch-jump" data-game-key="KeyR" aria-label="跳躍">▲<small>跳躍</small></button>
+          <button type="button" class="touch-hit" data-game-key="KeyZ" aria-label="擊球／確認">●<small>擊球／確認</small></button>
         </div>
       </nav>
-      <p class="touch-help">選擇模式：▲ ▼　確認：●　比賽時按住方向與擊球可控制球路</p>
+      <p class="touch-help"><span>左手滑動方向　右手跳躍、擊球</span><span>方向＋擊球控制球路 · ▲ ▼ 選單／● 確認</span></p>
     </div>
     <script>
       if ('serviceWorker' in navigator) {
